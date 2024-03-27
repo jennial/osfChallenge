@@ -2,17 +2,15 @@ trigger PrimaryContactPhoneTrigger on Contact (before update, before insert) {
     List<Contact> contactsToUpdate = new List<Contact>();
     Map<Id, Contact> primaryContactsMap = new Map<Id, Contact>();
 
-    // Popula o mapa de contatos principais
+
     for (Contact updatedContact : Trigger.new) {
         if (updatedContact.IsPrimary__c && updatedContact.AccountId != null) {
             primaryContactsMap.put(updatedContact.AccountId, updatedContact);
         }
     }
 
-    // Obtém os IDs dos contatos principais
     List<Id> primaryContactIds = new List<Id>(primaryContactsMap.keySet());
 
-    // Atualiza os contatos relacionados aos contatos principais
     for (Contact relatedContact : [SELECT Id, AccountId, Primary_Contact_Phone__c 
                                     FROM Contact
                                     WHERE AccountId IN :primaryContactIds AND Id != :primaryContactIds]) {
@@ -23,7 +21,7 @@ trigger PrimaryContactPhoneTrigger on Contact (before update, before insert) {
         }
     }
 
-    // Atualiza os contatos relacionados
+   
     if (!contactsToUpdate.isEmpty()) {
         Database.SaveResult[] updateResults = Database.update(contactsToUpdate, false);
         for (Database.SaveResult result : updateResults) {
