@@ -13,8 +13,8 @@ export default class WeatherApi extends LightningElement {
         getWeatherData({city:this.city}).then(
             response=>{
                 let weatherParseData = JSON.parse(response);
-                this.weatherIcon = weatherParseData.weather.icon;
-                this.weatherText = weatherParseData.weather.description;
+                this.weatherIcon = 'https://openweathermap.org/img/w/${this.weatherData.weather[0].icon}.png';
+                this.weatherText = weatherParseData.weather[0].description;
             }
         ).catch(error=>{
             this.weatherText = 'Error to find location';

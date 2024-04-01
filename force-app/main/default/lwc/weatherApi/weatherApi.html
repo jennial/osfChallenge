@@ -1,12 +1,15 @@
 <template>
-    <lightning-card title="Weather Farcasting">
-        <div class="slds-a-around_medium">
-            <lightning-input label="Enter City" onchange={handleCity}></lightning-input>
+    <div class="slds-size_6-of-12">
+
+        <lightning-card title="Weather Farcasting">
+            <div class="slds-a-around_medium">
+                <lightning-input label="Enter City" onchange={handleCity}></lightning-input>
+            </div>
+            <lightning-button class="slds-a-around_medium" label="Fetch Weather" variant="brand" onclick={handleGetWeather}></lightning-button>
+        </lightning-card>
+        <div if:true={weatherIcon}>
+            <img src={weatherIcon} alt="Weather Icon"/>
+            <strong>{weatherText}</strong>
         </div>
-        <lightning-button class="slds-a-around_medium" label="Fetch Weather" variant="brand" onclick={handleGetWeather}></lightning-button>
-    </lightning-card>
-    <div>
-        <img src={weatherIcon} alt="Weather Icon"/>
-        <strong>{weatherText}</strong>
     </div>
 </template>
